@@ -1,12 +1,19 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { Card, CardContent, Typography, Grid } from '@material-ui/core';
 import CountUp from 'react-countup';
 import cx from 'classnames';
 
 import styles from './Cards.module.scss';
 
-const Cards = ({ caseLabel, caseValue, lastUpdate }) => {
-	const capitaliseLabel = (string) =>
+type CardProps = {
+	caseLabel: string,
+	caseValue: number,
+	lastUpdate: string,
+}
+
+const Cards: FunctionComponent<CardProps> = ({ caseLabel, caseValue, lastUpdate }) => {
+
+	const capitaliseLabel = (string: string) =>
 		string.charAt(0).toUpperCase() + string.slice(1);
 
 	return (

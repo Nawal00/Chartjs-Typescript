@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from 'react';
 import { Grid } from '@material-ui/core';
 
@@ -5,7 +6,18 @@ import { Cards, Chart, CountryPicker } from './components/index';
 import styles from './App.module.scss';
 import { fetchData } from './api';
 
-class App extends React.Component {
+interface CovidDataNestObjectType {
+	value: number
+}
+
+type State = {
+	country: string,
+	covidData: {
+		[key: string] : CovidDataNestObjectType,
+	}
+}
+
+class App extends React.Component<State> {
 	state = {
 		covidData: {},
 		country: '',
@@ -16,11 +28,13 @@ class App extends React.Component {
 		this.setState({ covidData: fetchedData });
 	}
 
-	handleCountryChange = async (country) => {
+	handleCountryChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+		const country = e.target.value; 
 		const fetchedData = await fetchData(country);
 		console.log(fetchedData);
 		this.setState({ covidData: fetchedData, country });
 	};
+
 
 	render() {
 		const { covidData, country } = this.state;
@@ -29,7 +43,7 @@ class App extends React.Component {
 			<div className={styles.container}>
 				<Grid container spacing={3} justify='center'>
 					{covidData &&
-						Object.keys(covidData).map((caseLabel, i) => (
+						Object.keys(covidData).map((caseLabel: string, i) => (
 							<Cards
 								key={i}
 								caseLabel={caseLabel}

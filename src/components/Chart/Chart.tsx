@@ -1,11 +1,33 @@
-import React, { useEffect, useState } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import { fetchDailyData } from '../../api';
 import { Line, Bar } from 'react-chartjs-2';
 
 import styles from './Chart.module.scss';
 
-const Charts = ({ covidData: { confirmed, deaths, recovered }, country }) => {
-	const [dailyData, setDailyData] = useState([]);
+interface CovidDataNestObjectType {
+	value: number
+}
+
+type ChartsProps = {
+	country: string,
+	covidData: {
+		[key: string] : CovidDataNestObjectType,
+	}
+}
+
+interface DailyDataObjectType {
+	date: string,
+	confirmed: number,
+	deaths: number
+}
+
+const Charts: FunctionComponent<ChartsProps> = ({ covidData, country }) => {
+
+	const [dailyData, setDailyData] = useState<Array<DailyDataObjectType>>([]);
+
+	console.log(covidData);
+
+	const { confirmed, deaths, recovered } = covidData;
 
 	useEffect(() => {
 		const fetchAPI = async () => {
@@ -61,8 +83,6 @@ const Charts = ({ covidData: { confirmed, deaths, recovered }, country }) => {
 		/>
 	) : null;
 
-	// console.log(confirmed.value, deaths.vaue, recovered.value);
-	console.log(confirmed);
 	return (
 		<div className={styles.container}>{country ? barChart : lineChart}</div>
 	);
