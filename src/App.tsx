@@ -1,4 +1,4 @@
-// @ts-nocheck
+
 import React from 'react';
 import { Grid } from '@material-ui/core';
 
@@ -18,7 +18,7 @@ type State = {
 }
 
 class App extends React.Component<State> {
-	state = {
+	state: State = {
 		covidData: {},
 		country: '',
 	};
@@ -31,14 +31,14 @@ class App extends React.Component<State> {
 	handleCountryChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
 		const country = e.target.value; 
 		const fetchedData = await fetchData(country);
-		console.log(fetchedData);
 		this.setState({ covidData: fetchedData, country });
 	};
 
 
 	render() {
 		const { covidData, country } = this.state;
-
+		console.log('covidData', covidData);
+		
 		return (
 			<div className={styles.container}>
 				<Grid container spacing={3} justify='center'>
