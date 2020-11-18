@@ -37,7 +37,6 @@ class App extends React.Component<State> {
 
 	render() {
 		const { covidData, country } = this.state;
-		console.log('covidData', covidData);
 		
 		return (
 			<div className={styles.container}>
